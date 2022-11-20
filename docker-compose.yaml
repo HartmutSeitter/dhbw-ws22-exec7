@@ -1,0 +1,26 @@
+version: "3"
+services:
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mqtt
+    restart: always
+    volumes:
+      - /Users/hs/mqtt/mosquitto/config:/mosquitto/config
+      - /Users/hs/mqtt/mosquitto/data:/mosquitto/data
+      - /Users/hs/mqtt/mosquitto/log:/mosquitto/log
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+  users:
+    build: user/.
+    ports:
+      - "3000:3000"
+    image: hartmutseitter/dhbw-exec7-users
+    container_name: users
+  mongo:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - "~/mongo/data:/data/db"
